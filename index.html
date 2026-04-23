@@ -196,7 +196,6 @@
     .dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.2);cursor:pointer;transition:all 0.3s;border:1px solid rgba(255,255,255,0.1);}
     .dot.active{background:var(--gold);width:28px;border-radius:4px;border-color:var(--gold);}
 
-    .carousel-progress{position:absolute;bottom:0;left:0;height:3px;background:var(--gold);z-index:10;transition:width 0.1s linear;}
     .slide-counter{position:absolute;right:16px;bottom:26px;z-index:10;font-family:var(--heading);letter-spacing:2px;color:rgba(255,255,255,0.2);font-size:0.9rem;}
     .slide-counter span{color:var(--gold);font-size:1.3rem;}
 
@@ -219,6 +218,35 @@
     .value-desc{font-size:0.8rem;color:rgba(255,255,255,0.5);line-height:1.5;}
     .sobre-visual{display:flex;align-items:center;justify-content:center;height:360px;position:relative;}
     .sobre-visual img{max-height:320px;max-width:100%;object-fit:contain;filter:drop-shadow(0 0 40px rgba(245,197,24,0.25));}
+
+    /* ── TREINOS DA SEMANA ── */
+    #treinos{background:var(--navy);position:relative;overflow:hidden;}
+    .treinos-grid{display:flex;flex-direction:column;gap:2px;}
+    .treino-dia-bloco{margin-bottom:1.2rem;}
+    .treino-dia-label{
+      display:inline-flex;align-items:center;gap:0.5rem;
+      font-family:var(--heading);font-size:1.8rem;letter-spacing:3px;
+      color:var(--gold);margin-bottom:0.5rem;
+    }
+    .treino-dia-label span{font-family:var(--cond);font-size:0.7rem;letter-spacing:2px;color:rgba(255,255,255,0.3);font-weight:600;text-transform:uppercase;align-self:flex-end;padding-bottom:4px;}
+    .treino-item{
+      background:var(--navy2);
+      display:grid;grid-template-columns:80px 1fr;
+      gap:1rem;align-items:center;
+      padding:1rem 1.5rem;
+      border-left:3px solid var(--gold);
+      margin-bottom:2px;
+      transition:background 0.2s;
+    }
+    .treino-item:hover{background:var(--navy3);}
+    .treino-hora{
+      font-family:var(--heading);font-size:1.5rem;color:var(--gold);
+      line-height:1;letter-spacing:1px;
+    }
+    .treino-modalidade{
+      font-family:var(--cond);font-size:1.05rem;font-weight:700;
+      letter-spacing:1px;color:#fff;
+    }
 
     /* ── EVENTOS ── */
     #eventos{background:var(--navy);position:relative;overflow:hidden;}
@@ -340,12 +368,10 @@
     @media(max-width:768px){
       :root{--nav-h:56px;}
 
-      /* Esconde links desktop, mostra hamburguer */
       .nav-links{display:none;}
       .hamburger{display:flex;}
       .nav-logo-sub{display:none;}
 
-      /* Carousel mobile */
       .slide-title{font-size:clamp(2.4rem,13vw,4.5rem);}
       .slide-sub{font-size:0.75rem;letter-spacing:3px;}
       .slide-btns{gap:0.6rem;}
@@ -355,44 +381,39 @@
       .slide-stats{gap:1rem;margin-top:1.5rem;}
       .stat-num{font-size:2rem;}
 
-      /* Sobre */
       .sobre-grid{grid-template-columns:1fr;}
       .sobre-visual{height:220px;}
       .sobre-visual img{max-height:190px;}
       .sobre-values{grid-template-columns:1fr 1fr;}
 
-      /* Eventos */
       .evento-item{grid-template-columns:60px 1fr;padding:1rem 1rem;}
       .evento-badge{display:none;}
       .evento-info .title{font-size:1rem;}
 
-      /* Galeria — 2 colunas no mobile */
+      /* Treinos mobile */
+      .treino-item{grid-template-columns:70px 1fr;padding:0.8rem 1rem;}
+      .treino-hora{font-size:1.2rem;}
+
       .galeria-grid{grid-template-columns:repeat(2,1fr);}
 
-      /* Loja — 2 colunas no mobile */
       .loja-grid{grid-template-columns:repeat(2,1fr);gap:0.8rem;}
       .produto-name{font-size:0.82rem;}
       .produto-price{font-size:1.05rem;}
       .btn-comprar{font-size:0.7rem;padding:7px;}
 
-      /* Time — 3 colunas no mobile */
       .time-grid{grid-template-columns:repeat(3,1fr);gap:1rem;}
       .membro-avatar{width:72px;height:72px;}
       .membro-name{font-size:0.82rem;}
       .membro-role{font-size:0.62rem;}
 
-      /* Contato */
       .contato-grid{grid-template-columns:1fr;gap:2rem;}
 
-      /* Lightbox */
       .lb-arrow{width:38px;height:38px;font-size:1rem;}
       .lb-arrow.lb-prev{left:4px;}
       .lb-arrow.lb-next{right:4px;}
 
-      /* Botão voltar */
       .btn-back{padding:10px 20px;font-size:0.78rem;bottom:20px;}
 
-      /* Seção padding */
       .section-inner{padding:2.5rem 1rem 5rem;}
     }
 
@@ -435,6 +456,7 @@
     <!-- Desktop -->
     <ul class="nav-links">
       <li><a onclick="showSection('sobre')">Sobre</a></li>
+      <li><a onclick="showSection('treinos')">Treinos</a></li>
       <li><a onclick="showSection('eventos')">Eventos</a></li>
       <li><a onclick="showSection('galeria')">Galeria</a></li>
       <li><a onclick="showSection('loja')">Loja</a></li>
@@ -452,6 +474,7 @@
 <!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu">
   <a onclick="showSectionMobile('sobre')">Sobre</a>
+  <a onclick="showSectionMobile('treinos')">Treinos</a>
   <a onclick="showSectionMobile('eventos')">Eventos</a>
   <a onclick="showSectionMobile('galeria')">Galeria</a>
   <a onclick="showSectionMobile('loja')">Loja</a>
@@ -464,6 +487,7 @@
   <div class="carousel" id="mainCarousel">
     <div class="carousel-track" id="carouselTrack">
 
+      <!-- SLIDE 1 -->
       <div class="carousel-slide slide-1 is-active">
         <div class="slide-grid-bg"></div>
         <img class="slide-logo-bg" src="485175650_625898330207512_4279998039057300680_n.jpg" alt="">
@@ -483,11 +507,12 @@
             <div class="stat"><div class="stat-num">5</div><div class="stat-label">Modalidades</div></div>
             <div class="stat"><div class="stat-num">50+</div><div class="stat-label">Atletas</div></div>
             <div class="stat"><div class="stat-num">20+</div><div class="stat-label">Títulos</div></div>
-            <div class="stat"><div class="stat-num">2020</div><div class="stat-label">Fundação</div></div>
+            <div class="stat"><div class="stat-num">2015</div><div class="stat-label">Fundação</div></div>
           </div>
         </div>
       </div>
 
+      <!-- SLIDE 2 — CINCO MODALIDADES (stats e botão atualizados) -->
       <div class="carousel-slide slide-2">
         <div class="slide-grid-bg"></div>
         <img class="slide-logo-bg" src="485175650_625898330207512_4279998039057300680_n.jpg" alt="">
@@ -499,18 +524,19 @@
           <h1 class="slide-title">CINCO<br><span>MODALIDADES</span></h1>
           <p class="slide-sub">Futsal · Vôlei · Handebol · Basquete · e mais</p>
           <div class="slide-btns">
-            <button class="btn-green" onclick="showSection('eventos')">Ver Calendário</button>
+            <button class="btn-green" onclick="showSection('treinos')">Treinos da Semana</button>
             <button class="btn-outline-white" onclick="showSection('time')">Nosso Time</button>
           </div>
           <div class="slide-divider"></div>
           <div class="slide-stats">
-            <div class="stat"><div class="stat-num">15</div><div class="stat-label">Eventos em 2026</div></div>
-            <div class="stat"><div class="stat-num">6</div><div class="stat-label">Torneios Externos</div></div>
-            <div class="stat"><div class="stat-num">200+</div><div class="stat-label">Jogos no Ano</div></div>
+            <div class="stat"><div class="stat-num">3</div><div class="stat-label">Eventos em 2026</div></div>
+            <div class="stat"><div class="stat-num">1</div><div class="stat-label">Torneio Externo</div></div>
+            <div class="stat"><div class="stat-num">8x</div><div class="stat-label">Treinos/Sem</div></div>
           </div>
         </div>
       </div>
 
+      <!-- SLIDE 3 -->
       <div class="carousel-slide slide-3">
         <div class="slide-grid-bg"></div>
         <img class="slide-logo-bg" src="485175650_625898330207512_4279998039057300680_n.jpg" alt="">
@@ -543,7 +569,6 @@
       <div class="dot" onclick="goToSlide(1)"></div>
       <div class="dot" onclick="goToSlide(2)"></div>
     </div>
-    <div class="carousel-progress" id="carouselProgress"></div>
     <div class="slide-counter"><span id="slideNum">1</span> / 3</div>
   </div>
 </section>
@@ -577,6 +602,71 @@
   </div>
 </section>
 
+<!-- TREINOS DA SEMANA -->
+<section id="treinos">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-tag">Agenda Semanal</div>
+      <h2 class="section-title">TREINOS<br>DA SEMANA</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="treinos-grid">
+        <div class="treino-dia-bloco">
+        <div class="treino-dia-label">SEG <span>Segunda-feira</span></div>
+        <div class="treino-item">
+          <div class="treino-hora">19:30</div>
+          <div class="treino-modalidade">Tênis de Mesa Misto</div>
+        </div>
+
+      <!-- TERÇA -->
+      <div class="treino-dia-bloco">
+        <div class="treino-dia-label">TER <span>Terça-feira</span></div>
+        <div class="treino-item">
+          <div class="treino-hora">22:00</div>
+          <div class="treino-modalidade">Handebol Misto</div>
+        </div>
+      </div>
+
+      <!-- QUARTA -->
+      <div class="treino-dia-bloco">
+        <div class="treino-dia-label">QUA <span>Quarta-feira</span></div>
+        <div class="treino-item">
+          <div class="treino-hora">22:00</div>
+          <div class="treino-modalidade">Basquete Masculino</div>
+        </div>
+      </div>
+           <div class="treino-item">
+          <div class="treino-hora">20:30</div>
+          <div class="treino-modalidade">Futsal Feminino</div>
+        </div>
+      </div>
+
+      <!-- QUINTA -->
+     
+        <div class="treino-item">
+          <div class="treino-hora">22:00</div>
+          <div class="treino-modalidade">Futebol Masculino</div>
+        </div>
+        <div class="treino-item">
+          <div class="treino-hora">22:00</div>
+          <div class="treino-modalidade">Vôlei Misto</div>
+        </div>
+      </div>
+
+      <!-- SÁBADO -->
+      <div class="treino-dia-bloco">
+        <div class="treino-dia-label">SÁB <span>Sábado</span></div>
+        <div class="treino-item">
+          <div class="treino-hora">09:30</div>
+          <div class="treino-modalidade">Futebol de Campo</div>
+        </div>
+    
+        
+
+    </div>
+  </div>
+</section>
+
 <!-- EVENTOS -->
 <section id="eventos">
   <img class="eventos-logo-bg" src="485175650_625898330207512_4279998039057300680_n.jpg" alt="">
@@ -587,36 +677,61 @@
       <div class="divider"></div>
     </div>
     <div class="eventos-grid">
+
       <div class="evento-item">
-        <div class="evento-date"><div class="day">15</div><div class="month">Abr</div></div>
-        <div class="evento-info"><div class="title">Torneio de Futsal Internas</div><div class="meta">Ginásio Central · 14h00</div></div>
-        <div class="evento-badge">Inscrições abertas</div>
+        <div class="evento-date"><div class="day">14</div><div class="month">Jun 2024</div></div>
+        <div class="evento-info"><div class="title">Vinte Night</div><div class="meta">14 de junho de 2024</div></div>
+        <div class="evento-badge">Realizado</div>
       </div>
+
       <div class="evento-item">
-        <div class="evento-date"><div class="day">22</div><div class="month">Abr</div></div>
-        <div class="evento-info"><div class="title">Copa Universitária de Vôlei</div><div class="meta">Quadra Coberta · 09h00</div></div>
-        <div class="evento-badge">Em breve</div>
+        <div class="evento-date"><div class="day">20</div><div class="month">Out 2024</div></div>
+        <div class="evento-info"><div class="title">CopaCEF</div><div class="meta">20 de outubro de 2024</div></div>
+        <div class="evento-badge">Realizado</div>
       </div>
+
       <div class="evento-item">
-        <div class="evento-date"><div class="day">03</div><div class="month">Mai</div></div>
-        <div class="evento-info"><div class="title">Corrida Noturna 5k</div><div class="meta">Campus · 19h00</div></div>
-        <div class="evento-badge">Inscrições abertas</div>
+        <div class="evento-date"><div class="day">24</div><div class="month">Mai 2025</div></div>
+        <div class="evento-info"><div class="title">Vinte Night</div><div class="meta">24 de maio de 2025</div></div>
+        <div class="evento-badge">Realizado</div>
       </div>
+
       <div class="evento-item">
-        <div class="evento-date"><div class="day">10</div><div class="month">Mai</div></div>
-        <div class="evento-info"><div class="title">Campeonato de Natação</div><div class="meta">Piscina Olímpica · 08h00</div></div>
-        <div class="evento-badge">Em breve</div>
+        <div class="evento-date"><div class="day">24</div><div class="month">Mai 2025</div></div>
+        <div class="evento-info"><div class="title">CopaCEF Terceira</div><div class="meta">24 de maio de 2025</div></div>
+        <div class="evento-badge">Realizado</div>
       </div>
+
       <div class="evento-item">
-        <div class="evento-date"><div class="day">24</div><div class="month">Mai</div></div>
-        <div class="evento-info"><div class="title">Festa da AAA XX-Março 2026</div><div class="meta">Ginásio Principal · 21h00</div></div>
+        <div class="evento-date"><div class="day">30</div><div class="month">Mai 2025</div></div>
+        <div class="evento-info"><div class="title">Ativação Esportiva</div><div class="meta">30 de maio de 2025</div></div>
+        <div class="evento-badge">Realizado</div>
+      </div>
+
+      <div class="evento-item">
+        <div class="evento-date"><div class="day">01</div><div class="month">Nov 2025</div></div>
+        <div class="evento-info"><div class="title">CopaCEF Segundo Semestre</div><div class="meta">1 de novembro de 2025</div></div>
+        <div class="evento-badge">Realizado</div>
+      </div>
+
+      <div class="evento-item">
+        <div class="evento-date"><div class="day">28</div><div class="month">Fev 2026</div></div>
+        <div class="evento-info"><div class="title">Ativação 20 de Março</div><div class="meta">28 de fevereiro de 2026</div></div>
+        <div class="evento-badge">Realizado</div>
+      </div>
+
+      <div class="evento-item">
+        <div class="evento-date"><div class="day">08</div><div class="month">Abr 2026</div></div>
+        <div class="evento-info"><div class="title">Retirada de Produtos</div><div class="meta">8 de abril de 2026</div></div>
+        <div class="evento-badge">Realizado</div>
+      </div>
+
+      <div class="evento-item">
+        <div class="evento-date"><div class="day">10</div><div class="month">Abr 2026</div></div>
+        <div class="evento-info"><div class="title">Ação Social Instituto Sandra</div><div class="meta">10 de abril de 2026</div></div>
         <div class="evento-badge destaque">Destaque</div>
       </div>
-      <div class="evento-item">
-        <div class="evento-date"><div class="day">07</div><div class="month">Jun</div></div>
-        <div class="evento-info"><div class="title">Torneio Interuniversitário</div><div class="meta">Campus Externo · 08h00</div></div>
-        <div class="evento-badge">Em breve</div>
-      </div>
+
     </div>
   </div>
 </section>
@@ -733,17 +848,13 @@
     showSection(id);
   }
 
-  /* ── CAROUSEL ── */
+  /* ── CAROUSEL (sem timer automático) ── */
   let current = 0;
   const total = 3;
-  const INTERVAL = 5000;
-  let progressStart = null;
-  let rafId = null;
 
   const track = document.getElementById('carouselTrack');
   const slides = document.querySelectorAll('.carousel-slide');
   const dots = document.querySelectorAll('.dot');
-  const progressBar = document.getElementById('carouselProgress');
   const slideNum = document.getElementById('slideNum');
 
   function goToSlide(n) {
@@ -754,7 +865,6 @@
     dots[current].classList.add('active');
     track.style.transform = `translateX(-${current * 33.333}%)`;
     slideNum.textContent = current + 1;
-    resetProgress();
   }
 
   function nextSlide() { goToSlide(current + 1); }
@@ -762,22 +872,6 @@
 
   document.getElementById('nextBtn').addEventListener('click', nextSlide);
   document.getElementById('prevBtn').addEventListener('click', prevSlide);
-
-  function resetProgress() {
-    cancelAnimationFrame(rafId);
-    progressBar.style.width = '0%';
-    progressStart = null;
-    requestAnimationFrame(() => { requestAnimationFrame(animateProgress); });
-  }
-
-  function animateProgress(ts) {
-    if (!progressStart) progressStart = ts;
-    const elapsed = ts - progressStart;
-    const pct = Math.min((elapsed / INTERVAL) * 100, 100);
-    progressBar.style.width = pct + '%';
-    if (pct < 100) { rafId = requestAnimationFrame(animateProgress); }
-    else { nextSlide(); }
-  }
 
   let touchStartX = 0;
   const carousel = document.getElementById('mainCarousel');
@@ -798,8 +892,6 @@
       if (e.key === 'ArrowLeft') lbNavigate(-1);
     }
   });
-
-  resetProgress();
 
   /* ── GALERIA ── */
   const galItems = [
@@ -896,15 +988,15 @@
 
   const produtos = [
     {img:'camisa.jpeg',             name:'Camiseta Oficial XX-Março',        price:'R$ 79,90',  tag:'Novo'},
-    {img:'camisavinkingblack.jpeg', name:'Camiseta Viking Black',            price:'R$ 79,90',  tag:'Novo'},
-    {img:'blusavinking2026.jpeg',   name:'Blusa Viking 2026',                price:'R$ 89,90',  tag:'2026'},
-    {img:'camisajeysermas.jpeg',    name:'Jersey Futebol Americano Masc.',   price:'R$ 129,90', tag:''},
-    {img:'camisajeyserfem.jpeg',    name:'Jersey Futebol Americano Fem.',    price:'R$ 129,90', tag:''},
-    {img:'sambacancao.jpeg',        name:'Samba-Cançao Masc.',               price:'R$ 59,90',  tag:''},
-    {img:'sambacancaofem.jpeg',     name:'Samba-Cançao Fem.',                price:'R$ 59,90',  tag:''},
-    {img:'bandana.jpeg',            name:'Bandana Viking',                   price:'R$ 34,90',  tag:''},
+    {img:'camisavinkingblack.jpeg', name:'Camiseta Viking Black',            price:'R$ 65,00',  tag:'Novo'},
+    {img:'blusavinking2026.jpeg',   name:'Blusa Viking 2026',                price:'R$ 55,00',  tag:'2026'},
+    {img:'camisajeysermas.jpeg',    name:'Jersey Futebol Americano Masc.',   price:'R$ 140,90', tag:''},
+    {img:'camisajeyserfem.jpeg',    name:'Jersey Futebol Americano Fem.',    price:'R$ 140,90', tag:''},
+    {img:'sambacancao.jpeg',        name:'Samba-Cançao Masc.',               price:'R$ 54,90',  tag:''},
+    {img:'sambacancaofem.jpeg',     name:'Samba-Cançao Fem.',                price:'R$ 54,90',  tag:''},
+    {img:'bandana.jpeg',            name:'Bandana Viking',                   price:'R$ 38,00',  tag:''},
     {img:'mochila.jpeg',            name:'Mochila AAA XX-Março',             price:'R$ 129,90', tag:'Destaque'},
-    {img:'caneca.jpeg',             name:'Caneca Oficial 750ml',             price:'R$ 44,90',  tag:''},
+    {img:'caneca.jpeg',             name:'Caneca Oficial 750ml',             price:'R$ 37,00',  tag:''},
   ];
 
   const lg = document.getElementById('lojaGrid');
@@ -936,11 +1028,12 @@
     {foto:'kaylayne.png',       emoji:'🏐',  name:'Kaylayne',     role:'Dir. Esportivo'},
     {foto:'rodolfo.png',        emoji:'⛹️', name:'Rodolfo',      role:'Dir. Basquete'},
     {foto:'victorbasquete.png', emoji:'⛹️', name:'Victor',       role:'Dir. Basquete'},
-    {foto:'paulo.png',          emoji:'⚽',  name:'Paulo',        role:'Dir. Esportivo'},
+    {foto:'paulo.png',          emoji:'⚽',  name:'Paulo',        role:'Dir. Futebol '},
     {foto:'matheusfutebol.png', emoji:'⚽',  name:'Matheus',      role:'Dir. Futebol'},
     {foto:'anaeventos.png',     emoji:'🎉',  name:'Ana',          role:'Dir. Eventos'},
-    {foto:'arthur.png',         emoji:'🏅',  name:'Arthur',       role:'Dir. Esportivo'},
+    {foto:'arthur.png',         emoji:'🏅',  name:'Arthur',       role:'Dir. Tenis de mesa'},
     {foto:'mathesutecnico.png', emoji:'🔧',  name:'Matheus',      role:'Técnico'},
+    {foto:'bela.png',           emoji:'🏐',  name:'Bela',         role:'Dir. Vôlei'},
   ];
 
   const tg = document.getElementById('timeGrid');
