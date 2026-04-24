@@ -7,422 +7,7 @@
   <link rel="icon" type="image/jpeg" href="logo_sem_fundo (1).png">
   <link rel="apple-touch-icon" href="logo_sem_fundo (1).png">
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
-  <style>
-    *{margin:0;padding:0;box-sizing:border-box;}
-    :root{
-      --navy:#0d1f3c;
-      --navy2:#162d52;
-      --navy3:#1e3a66;
-      --gold:#F5C518;
-      --gold2:#e8b800;
-      --gold3:#c99a00;
-      --white:#ffffff;
-      --heading:'Bebas Neue',sans-serif;
-      --body:'Barlow',sans-serif;
-      --cond:'Barlow Condensed',sans-serif;
-      --nav-h:60px;
-    }
-    html{scroll-behavior:smooth;}
-    body{font-family:var(--body);background:var(--navy);color:#fff;overflow-x:hidden;}
-
-    /* ── NAV ── */
-    nav{
-      position:fixed;top:0;width:100%;z-index:200;
-      background:rgba(13,31,60,0.97);
-      backdrop-filter:blur(12px);
-      border-bottom:2px solid var(--gold3);
-      height:var(--nav-h);
-    }
-    .nav-inner{
-      max-width:1200px;margin:0 auto;
-      display:flex;align-items:center;justify-content:space-between;
-      height:100%;padding:0 1rem;
-    }
-    .nav-logo{display:flex;align-items:center;gap:10px;cursor:pointer;text-decoration:none;}
-    .nav-logo img{height:40px;width:40px;object-fit:contain;}
-    .nav-logo-text{font-family:var(--heading);font-size:1.3rem;color:var(--gold);letter-spacing:2px;line-height:1;}
-    .nav-logo-sub{font-size:0.6rem;letter-spacing:3px;color:rgba(255,255,255,0.4);text-transform:uppercase;}
-
-    /* Desktop links */
-    .nav-links{display:flex;gap:1.5rem;list-style:none;}
-    .nav-links a{
-      color:rgba(255,255,255,0.7);text-decoration:none;
-      font-size:0.72rem;font-weight:600;letter-spacing:2px;
-      text-transform:uppercase;transition:color 0.2s;cursor:pointer;position:relative;
-    }
-    .nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:var(--gold);transition:width 0.2s;}
-    .nav-links a:hover{color:var(--gold);}
-    .nav-links a:hover::after{width:100%;}
-
-    /* Hamburguer */
-    .hamburger{
-      display:none;flex-direction:column;justify-content:center;gap:5px;
-      background:transparent;border:none;cursor:pointer;padding:8px;
-      width:40px;height:40px;z-index:210;
-    }
-    .hamburger span{
-      display:block;height:2px;width:24px;background:var(--gold);
-      border-radius:2px;transition:all 0.3s;transform-origin:center;
-    }
-    .hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
-    .hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0);}
-    .hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
-
-    /* Mobile menu overlay */
-    .mobile-menu{
-      display:none;position:fixed;inset:0;top:var(--nav-h);z-index:190;
-      background:rgba(9,20,42,0.98);backdrop-filter:blur(16px);
-      flex-direction:column;align-items:center;justify-content:center;gap:0;
-      padding:2rem 0;
-    }
-    .mobile-menu.open{display:flex;}
-    .mobile-menu a{
-      display:block;width:100%;text-align:center;
-      padding:1.1rem 2rem;
-      font-family:var(--cond);font-size:1.4rem;font-weight:700;
-      letter-spacing:3px;text-transform:uppercase;
-      color:rgba(255,255,255,0.75);text-decoration:none;cursor:pointer;
-      border-bottom:1px solid rgba(245,197,24,0.08);
-      transition:color 0.2s,background 0.2s;
-    }
-    .mobile-menu a:hover{color:var(--gold);background:rgba(245,197,24,0.05);}
-
-    /* ── BOTÃO VOLTAR ── */
-    .btn-back{
-      display:none;align-items:center;gap:8px;
-      position:fixed;bottom:24px;left:50%;transform:translateX(-50%);
-      z-index:300;background:var(--gold);color:var(--navy);border:none;
-      padding:11px 24px;font-family:var(--cond);font-size:0.82rem;
-      font-weight:800;letter-spacing:2px;text-transform:uppercase;
-      cursor:pointer;box-shadow:0 4px 24px rgba(0,0,0,0.5);
-      transition:background 0.2s;border-radius:2px;white-space:nowrap;
-    }
-    .btn-back:hover{background:#fff;}
-    .btn-back svg{width:16px;height:16px;fill:var(--navy);flex-shrink:0;}
-    .btn-back.visible{display:flex;}
-
-    /* ── SECTIONS ── */
-    section{display:none;min-height:100vh;padding-top:var(--nav-h);}
-    section.active{display:block;}
-
-    /* ── HERO CAROUSEL ── */
-    #hero{position:relative;overflow:hidden;min-height:100vh;padding-top:0;}
-    .carousel{position:relative;width:100%;min-height:100vh;overflow:hidden;}
-    .carousel-track{display:flex;width:300%;min-height:100vh;transition:transform 0.8s cubic-bezier(0.77,0,0.18,1);}
-    .carousel-slide{width:33.333%;min-height:100vh;position:relative;display:flex;align-items:center;justify-content:center;padding-top:var(--nav-h);}
-
-    .slide-1{background:linear-gradient(135deg,#0a1628 0%,#0d1f3c 50%,#0f2347 100%);}
-    .slide-2{background:linear-gradient(135deg,#0d1a0d 0%,#0d2010 50%,#0a1c0a 100%);}
-    .slide-3{background:linear-gradient(135deg,#1a0a00 0%,#2a1000 50%,#1f0c00 100%);}
-
-    .slide-grid-bg{position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 59px,rgba(245,197,24,0.03) 59px,rgba(245,197,24,0.03) 60px),repeating-linear-gradient(90deg,transparent,transparent 59px,rgba(245,197,24,0.03) 59px,rgba(245,197,24,0.03) 60px);}
-    .slide-logo-bg{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:min(560px,80vw);height:min(560px,80vw);opacity:0.06;pointer-events:none;object-fit:contain;}
-    .slide-vignette{position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 25%,rgba(0,0,0,0.7) 100%);pointer-events:none;}
-    .slide-accent-top{position:absolute;top:0;left:0;right:0;height:3px;}
-    .slide-accent-bottom{position:absolute;bottom:0;left:0;right:0;height:1px;background:rgba(245,197,24,0.15);}
-    .slide-1 .slide-accent-top{background:linear-gradient(90deg,transparent,var(--gold),transparent);}
-    .slide-2 .slide-accent-top{background:linear-gradient(90deg,transparent,#4caf50,transparent);}
-    .slide-3 .slide-accent-top{background:linear-gradient(90deg,transparent,#ff6b35,transparent);}
-
-    .slide-content{
-      text-align:center;position:relative;z-index:2;
-      padding:1.5rem 1.2rem;max-width:900px;width:100%;
-      opacity:0;transform:translateY(30px);
-      transition:opacity 0.6s 0.3s,transform 0.6s 0.3s;
-    }
-    .carousel-slide.is-active .slide-content{opacity:1;transform:translateY(0);}
-
-    .slide-badge{
-      display:inline-block;font-family:var(--cond);font-size:0.7rem;
-      font-weight:800;letter-spacing:3px;text-transform:uppercase;
-      padding:5px 16px;margin-bottom:1rem;
-    }
-    .slide-1 .slide-badge{background:var(--gold);color:var(--navy);}
-    .slide-2 .slide-badge{background:#4caf50;color:#fff;}
-    .slide-3 .slide-badge{background:#ff6b35;color:#fff;}
-
-    .slide-title{
-      font-family:var(--heading);
-      font-size:clamp(2.8rem,12vw,8rem);
-      line-height:0.88;letter-spacing:4px;color:#fff;margin-bottom:0.5rem;
-    }
-    .slide-1 .slide-title span{color:var(--gold);}
-    .slide-2 .slide-title span{color:#6ee86e;}
-    .slide-3 .slide-title span{color:#ff8c5a;}
-
-    .slide-sub{
-      font-family:var(--cond);font-size:clamp(0.78rem,2.5vw,1.1rem);
-      letter-spacing:4px;text-transform:uppercase;
-      margin:1rem 0 1.8rem;color:rgba(255,255,255,0.4);
-    }
-    .slide-btns{display:flex;gap:0.8rem;justify-content:center;flex-wrap:wrap;}
-
-    .btn-gold{background:var(--gold);color:var(--navy);border:none;padding:13px 28px;font-family:var(--cond);font-size:0.95rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:background 0.2s,transform 0.1s;border-radius:2px;}
-    .btn-gold:hover{background:#fff;}
-    .btn-green{background:#4caf50;color:#fff;border:none;padding:13px 28px;font-family:var(--cond);font-size:0.95rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:background 0.2s;border-radius:2px;}
-    .btn-green:hover{background:#6ee86e;color:#000;}
-    .btn-orange{background:#ff6b35;color:#fff;border:none;padding:13px 28px;font-family:var(--cond);font-size:0.95rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:background 0.2s;border-radius:2px;}
-    .btn-orange:hover{background:#ff8c5a;}
-    .btn-outline{background:transparent;color:var(--gold);border:2px solid var(--gold);padding:11px 26px;font-family:var(--cond);font-size:0.95rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all 0.2s;border-radius:2px;}
-    .btn-outline:hover{background:var(--gold);color:var(--navy);}
-    .btn-outline-white{background:transparent;color:#fff;border:2px solid rgba(255,255,255,0.35);padding:11px 26px;font-family:var(--cond);font-size:0.95rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all 0.2s;border-radius:2px;}
-    .btn-outline-white:hover{background:rgba(255,255,255,0.1);}
-
-    .slide-divider{width:60px;height:2px;margin:1.8rem auto 0;opacity:0.35;}
-    .slide-1 .slide-divider{background:var(--gold);}
-    .slide-2 .slide-divider{background:#4caf50;}
-    .slide-3 .slide-divider{background:#ff6b35;}
-
-    .slide-stats{display:flex;gap:1.5rem;justify-content:center;margin-top:2rem;flex-wrap:wrap;}
-    .stat{text-align:center;}
-    .stat-num{font-family:var(--heading);font-size:2.4rem;line-height:1;}
-    .slide-1 .stat-num{color:var(--gold);}
-    .slide-2 .stat-num{color:#6ee86e;}
-    .slide-3 .stat-num{color:#ff8c5a;}
-    .stat-label{font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-top:3px;}
-
-    .carousel-arrow{
-      position:absolute;top:50%;transform:translateY(-50%);z-index:10;
-      background:rgba(245,197,24,0.12);border:1px solid rgba(245,197,24,0.3);
-      color:var(--gold);width:46px;height:46px;
-      display:flex;align-items:center;justify-content:center;
-      cursor:pointer;font-size:1.3rem;transition:all 0.2s;border-radius:2px;
-    }
-    .carousel-arrow:hover{background:var(--gold);color:var(--navy);}
-    .carousel-arrow.prev{left:12px;}
-    .carousel-arrow.next{right:12px;}
-
-    .carousel-dots{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);display:flex;gap:10px;z-index:10;}
-    .dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.2);cursor:pointer;transition:all 0.3s;border:1px solid rgba(255,255,255,0.1);}
-    .dot.active{background:var(--gold);width:28px;border-radius:4px;border-color:var(--gold);}
-
-    .slide-counter{position:absolute;right:16px;bottom:26px;z-index:10;font-family:var(--heading);letter-spacing:2px;color:rgba(255,255,255,0.2);font-size:0.9rem;}
-    .slide-counter span{color:var(--gold);font-size:1.3rem;}
-
-    /* ── SHARED ── */
-    .section-inner{max-width:1200px;margin:0 auto;padding:3.5rem 1.2rem 6rem;}
-    .section-header{margin-bottom:2.5rem;}
-    .section-tag{display:inline-block;background:var(--gold);color:var(--navy);font-family:var(--cond);font-size:0.68rem;font-weight:800;letter-spacing:3px;text-transform:uppercase;padding:3px 12px;margin-bottom:0.8rem;}
-    .section-title{font-family:var(--heading);font-size:clamp(2.2rem,7vw,4.5rem);line-height:0.95;letter-spacing:2px;color:#fff;}
-    .divider{width:50px;height:3px;background:var(--gold);margin-top:0.8rem;}
-
-    /* ── SOBRE ── */
-    #sobre{background:var(--navy2);position:relative;overflow:hidden;}
-    .sobre-logo-watermark{position:absolute;right:-80px;top:50%;transform:translateY(-50%);width:400px;opacity:0.04;pointer-events:none;object-fit:contain;}
-    .sobre-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;}
-    .sobre-text p{color:rgba(255,255,255,0.7);line-height:1.8;margin-bottom:1.2rem;font-size:0.97rem;}
-    .sobre-values{display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;margin-top:1.8rem;}
-    .value-card{border:1px solid rgba(245,197,24,0.2);padding:1rem;position:relative;overflow:hidden;background:rgba(245,197,24,0.03);}
-    .value-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--gold);}
-    .value-title{font-family:var(--cond);font-size:0.95rem;font-weight:700;letter-spacing:1px;margin-bottom:0.3rem;color:var(--gold);}
-    .value-desc{font-size:0.8rem;color:rgba(255,255,255,0.5);line-height:1.5;}
-    .sobre-visual{display:flex;align-items:center;justify-content:center;height:360px;position:relative;}
-    .sobre-visual img{max-height:320px;max-width:100%;object-fit:contain;filter:drop-shadow(0 0 40px rgba(245,197,24,0.25));}
-
-    /* ── TREINOS DA SEMANA ── */
-    #treinos{background:var(--navy);position:relative;overflow:hidden;}
-    .treinos-grid{display:flex;flex-direction:column;gap:2px;}
-    .treino-dia-bloco{margin-bottom:1.2rem;}
-    .treino-dia-label{
-      display:inline-flex;align-items:center;gap:0.5rem;
-      font-family:var(--heading);font-size:1.8rem;letter-spacing:3px;
-      color:var(--gold);margin-bottom:0.5rem;
-    }
-    .treino-dia-label span{font-family:var(--cond);font-size:0.7rem;letter-spacing:2px;color:rgba(255,255,255,0.3);font-weight:600;text-transform:uppercase;align-self:flex-end;padding-bottom:4px;}
-    .treino-item{
-      background:var(--navy2);
-      display:grid;grid-template-columns:80px 1fr;
-      gap:1rem;align-items:center;
-      padding:1rem 1.5rem;
-      border-left:3px solid var(--gold);
-      margin-bottom:2px;
-      transition:background 0.2s;
-    }
-    .treino-item:hover{background:var(--navy3);}
-    .treino-hora{
-      font-family:var(--heading);font-size:1.5rem;color:var(--gold);
-      line-height:1;letter-spacing:1px;
-    }
-    .treino-modalidade{
-      font-family:var(--cond);font-size:1.05rem;font-weight:700;
-      letter-spacing:1px;color:#fff;
-    }
-
-    /* ── EVENTOS ── */
-    #eventos{background:var(--navy);position:relative;overflow:hidden;}
-    .eventos-logo-bg{position:absolute;left:-80px;bottom:-80px;width:400px;opacity:0.03;pointer-events:none;object-fit:contain;}
-    .eventos-grid{display:grid;gap:1px;background:rgba(255,255,255,0.05);}
-    .evento-item{
-      background:var(--navy);
-      display:grid;grid-template-columns:70px 1fr auto;
-      gap:1rem;align-items:center;
-      padding:1.2rem 1.5rem;
-      transition:background 0.2s;border-left:3px solid transparent;
-    }
-    .evento-item:hover{background:var(--navy2);border-left-color:var(--gold);}
-    .evento-date{text-align:center;}
-    .evento-date .day{font-family:var(--heading);font-size:2.4rem;color:var(--gold);line-height:1;}
-    .evento-date .month{font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.35);}
-    .evento-info .title{font-family:var(--cond);font-size:1.1rem;font-weight:700;letter-spacing:1px;margin-bottom:0.25rem;color:#fff;}
-    .evento-info .meta{font-size:0.78rem;color:rgba(255,255,255,0.4);}
-    .evento-badge{background:rgba(245,197,24,0.12);color:var(--gold);border:1px solid rgba(245,197,24,0.3);font-family:var(--cond);font-size:0.68rem;letter-spacing:1.5px;text-transform:uppercase;padding:4px 12px;white-space:nowrap;border-radius:2px;}
-    .evento-badge.destaque{background:var(--gold);color:var(--navy);font-weight:800;}
-
-    /* ── GALERIA ── */
-    #galeria{background:var(--navy2);}
-    .galeria-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:3px;}
-    .gal-item{aspect-ratio:1;overflow:hidden;position:relative;cursor:pointer;}
-    .gal-item-inner{width:100%;height:100%;transition:transform 0.4s;}
-    .gal-item:hover .gal-item-inner{transform:scale(1.06);}
-    .gal-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:0.5rem;background:rgba(245,197,24,0.05);border:1px solid rgba(245,197,24,0.08);}
-    .gal-overlay{position:absolute;inset:0;background:rgba(0,0,0,0);transition:background 0.3s;display:flex;align-items:center;justify-content:center;}
-    .gal-item:hover .gal-overlay{background:rgba(0,0,0,0.35);}
-    .gal-zoom-icon{opacity:0;font-size:2rem;transition:opacity 0.3s;color:#fff;line-height:1;}
-    .gal-item:hover .gal-zoom-icon{opacity:1;}
-    .gal-note{margin-top:1.5rem;font-size:0.73rem;color:rgba(255,255,255,0.25);letter-spacing:1.5px;text-transform:uppercase;}
-
-    /* ── LIGHTBOX ── */
-    #lightbox{
-      display:none;position:fixed;inset:0;z-index:9999;
-      background:rgba(5,12,25,0.97);
-      align-items:center;justify-content:center;flex-direction:column;
-    }
-    #lightbox.open{display:flex;}
-    .lb-img-wrap{position:relative;max-width:92vw;max-height:78vh;display:flex;align-items:center;justify-content:center;}
-    #lb-img{max-width:92vw;max-height:76vh;object-fit:contain;display:block;border:2px solid rgba(245,197,24,0.2);}
-    .lb-caption{font-family:var(--cond);font-size:0.82rem;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-top:1rem;text-align:center;padding:0 1rem;}
-    .lb-close{
-      position:fixed;top:16px;right:16px;
-      background:rgba(245,197,24,0.15);border:1px solid rgba(245,197,24,0.3);
-      color:var(--gold);width:44px;height:44px;border-radius:50%;
-      font-size:1.2rem;cursor:pointer;
-      display:flex;align-items:center;justify-content:center;
-      transition:all 0.2s;z-index:10001;
-    }
-    .lb-close:hover{background:var(--gold);color:var(--navy);}
-    .lb-arrow{
-      position:fixed;top:50%;transform:translateY(-50%);
-      background:rgba(245,197,24,0.12);border:1px solid rgba(245,197,24,0.3);
-      color:var(--gold);width:46px;height:46px;
-      display:flex;align-items:center;justify-content:center;
-      cursor:pointer;font-size:1.4rem;transition:all 0.2s;z-index:10001;
-    }
-    .lb-arrow:hover{background:var(--gold);color:var(--navy);}
-    .lb-arrow.lb-prev{left:8px;}
-    .lb-arrow.lb-next{right:8px;}
-    .lb-counter{position:fixed;top:18px;left:50%;transform:translateX(-50%);font-family:var(--heading);font-size:0.85rem;letter-spacing:2px;color:rgba(255,255,255,0.25);z-index:10001;}
-    .lb-counter span{color:var(--gold);}
-
-    /* ── LOJA ── */
-    #loja{background:var(--navy);position:relative;overflow:hidden;}
-    .loja-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.2rem;}
-    .produto{background:var(--navy2);border:1px solid rgba(245,197,24,0.1);overflow:hidden;transition:transform 0.2s,border-color 0.2s;display:flex;flex-direction:column;}
-    .produto:hover{transform:translateY(-4px);border-color:rgba(245,197,24,0.5);}
-    .produto-img{aspect-ratio:1;overflow:hidden;position:relative;background:#fff;}
-    .produto-img img{width:100%;height:100%;object-fit:cover;transition:transform 0.4s;}
-    .produto:hover .produto-img img{transform:scale(1.05);}
-    .produto-tag{position:absolute;top:10px;left:10px;background:var(--gold);color:var(--navy);font-family:var(--cond);font-size:0.62rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;padding:3px 8px;z-index:2;}
-    .produto-info{padding:1rem;flex:1;display:flex;flex-direction:column;}
-    .produto-name{font-family:var(--cond);font-size:0.95rem;font-weight:700;letter-spacing:1px;margin-bottom:0.3rem;color:#fff;}
-    .produto-price{font-size:1.25rem;font-weight:700;color:var(--gold);margin-bottom:0.7rem;margin-top:auto;}
-    .btn-comprar{width:100%;background:transparent;color:rgba(255,255,255,0.6);border:1px solid rgba(245,197,24,0.2);padding:8px;font-family:var(--cond);font-size:0.78rem;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all 0.2s;}
-    .btn-comprar:hover{background:var(--gold);color:var(--navy);border-color:var(--gold);font-weight:800;}
-
-    /* ── TIME ── */
-    #time{background:var(--navy2);}
-    .time-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:1.5rem;}
-    .membro{text-align:center;}
-    .membro-avatar{width:90px;height:90px;border-radius:50%;margin:0 auto 0.8rem;overflow:hidden;border:2px solid rgba(245,197,24,0.3);background:rgba(245,197,24,0.07);position:relative;}
-    .membro-avatar img{width:100%;height:100%;object-fit:cover;}
-    .membro-avatar-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:2.2rem;}
-    .membro-avatar::after{content:'';position:absolute;inset:-4px;border-radius:50%;border:1px solid rgba(245,197,24,0.1);pointer-events:none;}
-    .membro-num{position:absolute;top:2px;right:2px;font-family:var(--heading);background:var(--navy);border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:0.65rem;color:var(--gold);z-index:3;}
-    .membro-name{font-family:var(--cond);font-size:0.95rem;font-weight:700;letter-spacing:1px;color:#fff;}
-    .membro-role{font-size:0.7rem;color:rgba(255,255,255,0.35);letter-spacing:1.5px;text-transform:uppercase;margin-top:3px;}
-
-    /* ── CONTATO ── */
-    #contato{background:var(--navy);position:relative;overflow:hidden;}
-    .contato-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;}
-    .social-links{display:flex;flex-direction:column;gap:0.8rem;margin-top:1.5rem;}
-    .social-item{display:flex;align-items:center;gap:1rem;padding:0.9rem 1rem;border:1px solid rgba(245,197,24,0.12);transition:all 0.2s;cursor:pointer;text-decoration:none;color:inherit;}
-    .social-item:hover{border-color:var(--gold);background:rgba(245,197,24,0.06);}
-    .social-icon{font-size:1.3rem;width:30px;text-align:center;}
-    .social-name{font-family:var(--cond);font-size:0.95rem;font-weight:700;letter-spacing:1px;color:#fff;}
-    .social-handle{font-size:0.75rem;color:rgba(255,255,255,0.35);}
-    .contato-form{display:flex;flex-direction:column;gap:0.9rem;}
-    .form-group input,.form-group textarea{width:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(245,197,24,0.12);color:#fff;padding:11px 14px;font-family:var(--body);font-size:0.9rem;outline:none;transition:border-color 0.2s;resize:vertical;}
-    .form-group input:focus,.form-group textarea:focus{border-color:var(--gold);}
-    .form-group input::placeholder,.form-group textarea::placeholder{color:rgba(255,255,255,0.2);}
-    .form-group textarea{min-height:100px;}
-    .form-label{font-size:0.68rem;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:5px;display:block;}
-
-    /* ── FOOTER ── */
-    footer{background:#060f1e;border-top:2px solid rgba(245,197,24,0.2);padding:2rem 1rem;text-align:center;}
-    .footer-inner{max-width:1200px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:0.8rem;}
-    .footer-logo{display:flex;align-items:center;gap:10px;}
-    .footer-logo img{height:44px;object-fit:contain;filter:drop-shadow(0 0 10px rgba(245,197,24,0.3));}
-    .footer-name{font-family:var(--heading);font-size:1.6rem;color:var(--gold);letter-spacing:3px;}
-    .footer-copy{font-size:0.7rem;color:rgba(255,255,255,0.2);letter-spacing:1.5px;text-transform:uppercase;}
-
-    /* ── MOBILE RESPONSIVO ── */
-    @media(max-width:768px){
-      :root{--nav-h:56px;}
-
-      .nav-links{display:none;}
-      .hamburger{display:flex;}
-      .nav-logo-sub{display:none;}
-
-      .slide-title{font-size:clamp(2.4rem,13vw,4.5rem);}
-      .slide-sub{font-size:0.75rem;letter-spacing:3px;}
-      .slide-btns{gap:0.6rem;}
-      .btn-gold,.btn-green,.btn-orange,.btn-outline,.btn-outline-white{
-        padding:11px 18px;font-size:0.85rem;letter-spacing:1.5px;
-      }
-      .slide-stats{gap:1rem;margin-top:1.5rem;}
-      .stat-num{font-size:2rem;}
-
-      .sobre-grid{grid-template-columns:1fr;}
-      .sobre-visual{height:220px;}
-      .sobre-visual img{max-height:190px;}
-      .sobre-values{grid-template-columns:1fr 1fr;}
-
-      .evento-item{grid-template-columns:60px 1fr;padding:1rem 1rem;}
-      .evento-badge{display:none;}
-      .evento-info .title{font-size:1rem;}
-
-      /* Treinos mobile */
-      .treino-item{grid-template-columns:70px 1fr;padding:0.8rem 1rem;}
-      .treino-hora{font-size:1.2rem;}
-
-      .galeria-grid{grid-template-columns:repeat(2,1fr);}
-
-      .loja-grid{grid-template-columns:repeat(2,1fr);gap:0.8rem;}
-      .produto-name{font-size:0.82rem;}
-      .produto-price{font-size:1.05rem;}
-      .btn-comprar{font-size:0.7rem;padding:7px;}
-
-      .time-grid{grid-template-columns:repeat(3,1fr);gap:1rem;}
-      .membro-avatar{width:72px;height:72px;}
-      .membro-name{font-size:0.82rem;}
-      .membro-role{font-size:0.62rem;}
-
-      .contato-grid{grid-template-columns:1fr;gap:2rem;}
-
-      .lb-arrow{width:38px;height:38px;font-size:1rem;}
-      .lb-arrow.lb-prev{left:4px;}
-      .lb-arrow.lb-next{right:4px;}
-
-      .btn-back{padding:10px 20px;font-size:0.78rem;bottom:20px;}
-
-      .section-inner{padding:2.5rem 1rem 5rem;}
-    }
-
-    @media(max-width:400px){
-      .loja-grid{grid-template-columns:1fr;}
-      .time-grid{grid-template-columns:repeat(2,1fr);}
-      .slide-btns{flex-direction:column;align-items:center;}
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
@@ -438,7 +23,9 @@
 
 <!-- BOTÃO VOLTAR -->
 <button class="btn-back" id="btnBack" onclick="showSection('hero')" aria-label="Voltar ao início">
-  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+  </svg>
   Voltar
 </button>
 
@@ -482,7 +69,7 @@
   <a onclick="showSectionMobile('contato')">Contato</a>
 </div>
 
-<!-- HERO CAROUSEL -->
+<!-- ══════════════════════════════ HERO CAROUSEL ══════════════════════════════ -->
 <section id="hero" class="active">
   <div class="carousel" id="mainCarousel">
     <div class="carousel-track" id="carouselTrack">
@@ -512,7 +99,7 @@
         </div>
       </div>
 
-      <!-- SLIDE 2 — CINCO MODALIDADES (stats e botão atualizados) -->
+      <!-- SLIDE 2 -->
       <div class="carousel-slide slide-2">
         <div class="slide-grid-bg"></div>
         <img class="slide-logo-bg" src="logo_sem_fundo (1).png" alt="">
@@ -560,20 +147,22 @@
         </div>
       </div>
 
-    </div>
+    </div><!-- /carousel-track -->
 
     <button class="carousel-arrow prev" id="prevBtn">&#8592;</button>
     <button class="carousel-arrow next" id="nextBtn">&#8594;</button>
+
     <div class="carousel-dots" id="carouselDots">
       <div class="dot active" onclick="goToSlide(0)"></div>
       <div class="dot" onclick="goToSlide(1)"></div>
       <div class="dot" onclick="goToSlide(2)"></div>
     </div>
+
     <div class="slide-counter"><span id="slideNum">1</span> / 3</div>
   </div>
 </section>
 
-<!-- SOBRE -->
+<!-- ══════════════════════════════ SOBRE ══════════════════════════════ -->
 <section id="sobre">
   <img class="sobre-logo-watermark" src="logo_sem_fundo (1).png" alt="">
   <div class="section-inner">
@@ -589,10 +178,22 @@
           <p>Competimos nos maiores torneios do estado e do país, carregando nossas cores — azul e dourado — com orgulho e determinação em cada disputa.</p>
         </div>
         <div class="sobre-values">
-          <div class="value-card"><div class="value-title">Força</div><div class="value-desc">Enfrentamos cada desafio com a coragem de um verdadeiro guerreiro.</div></div>
-          <div class="value-card"><div class="value-title">União</div><div class="value-desc">Uma família unida pela paixão pelo esporte e pelos estudos.</div></div>
-          <div class="value-card"><div class="value-title">Honra</div><div class="value-desc">Competimos com fair play e respeito a todos os adversários.</div></div>
-          <div class="value-card"><div class="value-title">Tradição</div><div class="value-desc">Anos de história, conquistas e memórias que nos definem.</div></div>
+          <div class="value-card">
+            <div class="value-title">Força</div>
+            <div class="value-desc">Enfrentamos cada desafio com a coragem de um verdadeiro guerreiro.</div>
+          </div>
+          <div class="value-card">
+            <div class="value-title">União</div>
+            <div class="value-desc">Uma família unida pela paixão pelo esporte e pelos estudos.</div>
+          </div>
+          <div class="value-card">
+            <div class="value-title">Honra</div>
+            <div class="value-desc">Competimos com fair play e respeito a todos os adversários.</div>
+          </div>
+          <div class="value-card">
+            <div class="value-title">Tradição</div>
+            <div class="value-desc">Anos de história, conquistas e memórias que nos definem.</div>
+          </div>
         </div>
       </div>
       <div class="sobre-visual">
@@ -602,7 +203,7 @@
   </div>
 </section>
 
-<!-- TREINOS DA SEMANA -->
+<!-- ══════════════════════════════ TREINOS ══════════════════════════════ -->
 <section id="treinos">
   <div class="section-inner">
     <div class="section-header">
@@ -611,12 +212,15 @@
       <div class="divider"></div>
     </div>
     <div class="treinos-grid">
-        <div class="treino-dia-bloco">
+
+      <!-- SEGUNDA -->
+      <div class="treino-dia-bloco">
         <div class="treino-dia-label">SEG <span>Segunda-feira</span></div>
         <div class="treino-item">
           <div class="treino-hora">19:30</div>
           <div class="treino-modalidade">Tênis de Mesa Misto</div>
         </div>
+      </div>
 
       <!-- TERÇA -->
       <div class="treino-dia-bloco">
@@ -634,15 +238,15 @@
           <div class="treino-hora">22:00</div>
           <div class="treino-modalidade">Basquete Masculino</div>
         </div>
-      </div>
-           <div class="treino-item">
+        <div class="treino-item">
           <div class="treino-hora">20:30</div>
           <div class="treino-modalidade">Futsal Feminino</div>
         </div>
       </div>
 
       <!-- QUINTA -->
-     
+      <div class="treino-dia-bloco">
+        <div class="treino-dia-label">QUI <span>Quinta-feira</span></div>
         <div class="treino-item">
           <div class="treino-hora">22:00</div>
           <div class="treino-modalidade">Futebol Masculino</div>
@@ -660,14 +264,13 @@
           <div class="treino-hora">09:30</div>
           <div class="treino-modalidade">Futebol de Campo</div>
         </div>
-    
-        
+      </div>
 
     </div>
   </div>
 </section>
 
-<!-- EVENTOS -->
+<!-- ══════════════════════════════ EVENTOS ══════════════════════════════ -->
 <section id="eventos">
   <img class="eventos-logo-bg" src="logo_sem_fundo (1).png" alt="">
   <div class="section-inner">
@@ -736,7 +339,7 @@
   </div>
 </section>
 
-<!-- GALERIA -->
+<!-- ══════════════════════════════ GALERIA ══════════════════════════════ -->
 <section id="galeria">
   <div class="section-inner">
     <div class="section-header">
@@ -749,7 +352,7 @@
   </div>
 </section>
 
-<!-- LOJA -->
+<!-- ══════════════════════════════ LOJA ══════════════════════════════ -->
 <section id="loja">
   <div class="section-inner">
     <div class="section-header">
@@ -761,7 +364,7 @@
   </div>
 </section>
 
-<!-- TIME -->
+<!-- ══════════════════════════════ TIME ══════════════════════════════ -->
 <section id="time">
   <div class="section-inner">
     <div class="section-header">
@@ -773,7 +376,7 @@
   </div>
 </section>
 
-<!-- CONTATO -->
+<!-- ══════════════════════════════ CONTATO ══════════════════════════════ -->
 <section id="contato">
   <div class="section-inner">
     <div class="section-header">
@@ -783,29 +386,50 @@
     </div>
     <div class="contato-grid">
       <div>
-        <p style="color:rgba(255,255,255,0.6);line-height:1.8;margin-bottom:1.5rem;">Quer se associar, patrocinar ou tirar dúvidas? Nos mande uma mensagem ou entre em contato pelas nossas redes sociais!</p>
+        <p style="color:rgba(255,255,255,0.6);line-height:1.8;margin-bottom:1.5rem;">
+          Quer se associar, patrocinar ou tirar dúvidas? Nos mande uma mensagem ou entre em contato pelas nossas redes sociais!
+        </p>
         <div class="social-links">
           <a class="social-item" href="https://www.instagram.com/atleticafacef" target="_blank">
             <span class="social-icon">📸</span>
-            <div><div class="social-name">Instagram</div><div class="social-handle">@atleticafacef</div></div>
+            <div>
+              <div class="social-name">Instagram</div>
+              <div class="social-handle">@atleticafacef</div>
+            </div>
           </a>
-          <a class="social-item" href="mailto:atleticaxxmarco@email.com">
+          <a class="social-item" href="mailto:facefatletica@gmail.com">
             <span class="social-icon">✉</span>
-            <div><div class="social-name">E-mail</div><div class="social-handle">facefatletica@gmail.com</div></div>
+            <div>
+              <div class="social-name">E-mail</div>
+              <div class="social-handle">facefatletica@gmail.com</div>
+            </div>
           </a>
         </div>
       </div>
       <div class="contato-form">
-        <div class="form-group"><label class="form-label">Nome</label><input type="text" placeholder="Seu nome completo"></div>
-        <div class="form-group"><label class="form-label">E-mail</label><input type="email" placeholder="seu@email.com"></div>
-        <div class="form-group"><label class="form-label">Assunto</label><input type="text" placeholder="Assunto da mensagem"></div>
-        <div class="form-group"><label class="form-label">Mensagem</label><textarea placeholder="Sua mensagem..."></textarea></div>
+        <div class="form-group">
+          <label class="form-label">Nome</label>
+          <input type="text" placeholder="Seu nome completo">
+        </div>
+        <div class="form-group">
+          <label class="form-label">E-mail</label>
+          <input type="email" placeholder="seu@email.com">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Assunto</label>
+          <input type="text" placeholder="Assunto da mensagem">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Mensagem</label>
+          <textarea placeholder="Sua mensagem..."></textarea>
+        </div>
         <button class="btn-gold" style="width:100%;padding:13px;">Enviar Mensagem</button>
       </div>
     </div>
   </div>
 </section>
 
+<!-- ══════════════════════════════ FOOTER ══════════════════════════════ -->
 <footer>
   <div class="footer-inner">
     <div class="footer-logo">
@@ -816,246 +440,6 @@
   </div>
 </footer>
 
-<script>
-  /* ── HAMBURGUER ── */
-  const hamburger = document.getElementById('hamburger');
-  const mobileMenu = document.getElementById('mobileMenu');
-
-  hamburger.addEventListener('click', () => {
-    const isOpen = mobileMenu.classList.toggle('open');
-    hamburger.classList.toggle('open', isOpen);
-    document.body.style.overflow = isOpen ? 'hidden' : '';
-  });
-
-  function closeMobileMenu() {
-    mobileMenu.classList.remove('open');
-    hamburger.classList.remove('open');
-    document.body.style.overflow = '';
-  }
-
-  /* ── NAVEGAÇÃO ── */
-  const btnBack = document.getElementById('btnBack');
-
-  function showSection(id) {
-    document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
-    document.getElementById(id).classList.add('active');
-    window.scrollTo(0, 0);
-    btnBack.classList.toggle('visible', id !== 'hero');
-  }
-
-  function showSectionMobile(id) {
-    closeMobileMenu();
-    showSection(id);
-  }
-
-  /* ── CAROUSEL (sem timer automático) ── */
-  let current = 0;
-  const total = 3;
-
-  const track = document.getElementById('carouselTrack');
-  const slides = document.querySelectorAll('.carousel-slide');
-  const dots = document.querySelectorAll('.dot');
-  const slideNum = document.getElementById('slideNum');
-
-  function goToSlide(n) {
-    slides[current].classList.remove('is-active');
-    dots[current].classList.remove('active');
-    current = (n + total) % total;
-    slides[current].classList.add('is-active');
-    dots[current].classList.add('active');
-    track.style.transform = `translateX(-${current * 33.333}%)`;
-    slideNum.textContent = current + 1;
-  }
-
-  function nextSlide() { goToSlide(current + 1); }
-  function prevSlide() { goToSlide(current - 1); }
-
-  document.getElementById('nextBtn').addEventListener('click', nextSlide);
-  document.getElementById('prevBtn').addEventListener('click', prevSlide);
-
-  let touchStartX = 0;
-  const carousel = document.getElementById('mainCarousel');
-  carousel.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, {passive:true});
-  carousel.addEventListener('touchend', e => {
-    const diff = touchStartX - e.changedTouches[0].clientX;
-    if (Math.abs(diff) > 50) diff > 0 ? nextSlide() : prevSlide();
-  });
-
-  document.addEventListener('keydown', e => {
-    if (document.getElementById('hero').classList.contains('active')) {
-      if (e.key === 'ArrowRight') nextSlide();
-      if (e.key === 'ArrowLeft') prevSlide();
-    }
-    if (lightbox.classList.contains('open')) {
-      if (e.key === 'Escape') closeLightbox();
-      if (e.key === 'ArrowRight') lbNavigate(1);
-      if (e.key === 'ArrowLeft') lbNavigate(-1);
-    }
-  });
-
-  /* ── GALERIA ── */
-  const galItems = [
-    {img:'pessoas.jpeg',      label:'Galera da AAA'},
-    {img:'titulos.jpeg',      label:'Campeões Gerais'},
-    {img:'trofeus.jpeg',      label:'Troféus CopaCEF'},
-    {img:'trofeus2026.jpeg',  label:'Troféus 2026'},
-    {img:'premios.jpeg',      label:'Prêmios CopaCEF 2025'},
-    {img:'copacef.jpeg',      label:'CopaCEF – Jogos Internos'},
-    {img:'fifa.jpeg',         label:'Campeão FIFA'},
-    {img:'mvp.jpeg',          label:'MVP – Maior Pontuador Vôlei'},
-    {img:'levantador.jpeg',   label:'Melhor Levantador Vôlei'},
-    {img:'craque.jpeg',       label:'Craque do Ano – Futebol 7'},
-    {img:'goleiros.jpeg',     label:'Melhor Goleiro – Futebol 7'},
-  ];
-
-  const gg = document.getElementById('galeriaGrid');
-
-  function createPlaceholder(label) {
-    const d = document.createElement('div');
-    d.className = 'gal-item';
-    d.style.cursor = 'default';
-    d.innerHTML = `<div class="gal-placeholder"><span style="font-size:2rem;opacity:0.3">📷</span><span style="font-size:0.65rem;color:rgba(255,255,255,0.2);letter-spacing:1px;text-align:center;padding:0 4px;">${label}</span></div>`;
-    return d;
-  }
-
-  galItems.forEach((g, idx) => {
-    const wrapper = document.createElement('div');
-    wrapper.className = 'gal-item';
-    wrapper.innerHTML = `
-      <div class="gal-item-inner">
-        <img src="${g.img}" alt="${g.label}" style="width:100%;height:100%;object-fit:cover;">
-        <div class="gal-overlay"><span class="gal-zoom-icon">⊕</span></div>
-      </div>`;
-    const img = wrapper.querySelector('img');
-    img.onerror = () => wrapper.replaceWith(createPlaceholder(g.label));
-    wrapper.addEventListener('click', () => openLightbox(g.img, g.label, idx));
-    gg.appendChild(wrapper);
-  });
-
-  /* ── LIGHTBOX ── */
-  const lightbox = document.getElementById('lightbox');
-  const lbImg = document.getElementById('lb-img');
-  const lbCaption = document.getElementById('lb-caption');
-  const lbNum = document.getElementById('lbNum');
-  const lbTotal = document.getElementById('lbTotal');
-  let lbCurrentIdx = 0;
-  lbTotal.textContent = galItems.length;
-
-  function openLightbox(src, label, idx) {
-    lbCurrentIdx = idx;
-    lbImg.src = src;
-    lbImg.alt = label;
-    lbCaption.textContent = label;
-    lbNum.textContent = idx + 1;
-    lightbox.classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeLightbox() {
-    lightbox.classList.remove('open');
-    document.body.style.overflow = '';
-    lbImg.src = '';
-  }
-
-  function lbNavigate(dir) {
-    lbCurrentIdx = (lbCurrentIdx + dir + galItems.length) % galItems.length;
-    const g = galItems[lbCurrentIdx];
-    lbImg.src = g.img;
-    lbImg.alt = g.label;
-    lbCaption.textContent = g.label;
-    lbNum.textContent = lbCurrentIdx + 1;
-  }
-
-  document.getElementById('lbClose').addEventListener('click', closeLightbox);
-  document.getElementById('lbPrev').addEventListener('click', () => lbNavigate(-1));
-  document.getElementById('lbNext').addEventListener('click', () => lbNavigate(1));
-  lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
-
-  let lbTouchX = 0;
-  lightbox.addEventListener('touchstart', e => { lbTouchX = e.touches[0].clientX; }, {passive:true});
-  lightbox.addEventListener('touchend', e => {
-    const diff = lbTouchX - e.changedTouches[0].clientX;
-    if (Math.abs(diff) > 40) lbNavigate(diff > 0 ? 1 : -1);
-  });
-
-  /* ── LOJA ── */
-  const IG_LOJA = 'lojinhatleticafacef';
-
-  function igDirect(nomeProduto, preco) {
-    const msg = encodeURIComponent(`Olá! Tenho interesse em comprar: ${nomeProduto} (${preco}) 🛒`);
-    window.open(`https://ig.me/m/${IG_LOJA}?text=${msg}`, '_blank');
-  }
-
-  const produtos = [
-    {img:'bandana1.jpeg',            name:'Bandana Viking',                   price:'R$ 38,00',  tag:'Destaque'},
-    {img:'mochila.jpeg',            name:'Mochila AAA XX-Março',             price:'R$ 32,00', tag:'Destaque'},
-    {img:'blusavinking2026.jpeg',   name:'Blusa Viking 2026',                price:'R$ 55,00',  tag:'2026'},
-    {img:'blusajeysermasc.jpeg',    name:'Jersey Futebol Americano Masc.',   price:'R$ 140,90', tag:'Edição Limitada'},
-    {img:'blusajeyser.jpeg',    name:'Jersey Futebol Americano Fem.',    price:'R$ 140,90', tag:'Edição Limitada'},
-    {img:'sambamas.jpeg',        name:'Samba-Cançao Masc.',               price:'R$ 54,90',  tag:'Edição Limitada'},
-    {img:'sambafem.jpeg',     name:'Samba-Cançao Fem.',                price:'R$ 54,90',  tag:'Edição Limitada'},
-    {img:'caneca1.jpeg',               name:'Caneca Oficial 750ml',             price:'R$ 37,00',  tag:''},
-    {img:'blusa2025.jpeg',             name:'Camiseta Oficial XX-Março',        price:' ̶R̶$̶ ̶5̶5̶,̶0̶0̶',  tag:'Esgotado'},
-    {img:'blusablack.jpeg',            name:'Camiseta Viking Black',            price:' ̶R̶$̶ ̶6̶5̶,̶0̶0̶',  tag:'Esgotado'},
-  ];
-
-  const lg = document.getElementById('lojaGrid');
-  produtos.forEach(p => {
-    const card = document.createElement('div');
-    card.className = 'produto';
-    card.innerHTML = `
-      <div class="produto-img">
-        ${p.tag ? `<div class="produto-tag">${p.tag}</div>` : ''}
-        <img src="${p.img}" alt="${p.name}" loading="lazy">
-      </div>
-      <div class="produto-info">
-        <div class="produto-name">${p.name}</div>
-        <div class="produto-price">${p.price}</div>
-        <button class="btn-comprar">Comprar via Instagram</button>
-      </div>`;
-    card.querySelector('.btn-comprar').addEventListener('click', () => igDirect(p.name, p.price));
-    lg.appendChild(card);
-  });
-
-  /* ── TIME ── */
-  const membros = [
-    {foto:'guilherme.png',      emoji:'⚔',  name:'Guilherme',    role:'Presidente'},
-    {foto:'sarah.png',          emoji:'🛡',  name:'Sarah',        role:'Vice-Presidente'},
-    {foto:'sabrina.png',        emoji:'🏆',  name:'Sabrina',      role:'Dir. Geral'},
-    {foto:'kamila.png',         emoji:'💰',  name:'Kamila',       role:'Dir. Financeiro'},
-    {foto:'beatriz.png',        emoji:'📣',  name:'Beatriz',      role:'Dir. Marketing'},
-    {foto:'luciano.png',        emoji:'🏐',  name:'Luciano',      role:'Dir. Vôlei'},
-    {foto:'kaylayne.png',       emoji:'🏐',  name:'Kaylayne',     role:'Dir. Esportivo'},
-    {foto:'rodolfo.png',        emoji:'⛹️', name:'Rodolfo',      role:'Dir. Basquete'},
-    {foto:'victorbasquete.png', emoji:'⛹️', name:'Victor',       role:'Dir. Basquete'},
-    {foto:'paulo.png',          emoji:'⚽',  name:'Paulo',        role:'Dir. Futebol '},
-    {foto:'matheusfutebol.png', emoji:'⚽',  name:'Matheus',      role:'Dir. Futebol'},
-    {foto:'anaeventos.png',     emoji:'🎉',  name:'Ana',          role:'Dir. Eventos'},
-    {foto:'arthur.png',         emoji:'🏅',  name:'Arthur',       role:'Dir. Tenis de mesa'},
-    {foto:'mathesutecnico.png', emoji:'🔧',  name:'Matheus',      role:'Técnico'},
-    {foto:'bela.png',           emoji:'🏐',  name:'Bela',         role:'Dir. Vôlei'},
-  ];
-
-  const tg = document.getElementById('timeGrid');
-  membros.forEach((m, i) => {
-    const div = document.createElement('div');
-    div.className = 'membro';
-    div.innerHTML = `
-      <div class="membro-avatar">
-        <img src="${m.foto}" alt="${m.name}">
-        <span class="membro-num">#${String(i+1).padStart(2,'0')}</span>
-      </div>
-      <div class="membro-name">${m.name}</div>
-      <div class="membro-role">${m.role}</div>`;
-    const img = div.querySelector('img');
-    img.onerror = () => {
-      const ph = document.createElement('div');
-      ph.className = 'membro-avatar-placeholder';
-      ph.textContent = m.emoji;
-      img.replaceWith(ph);
-    };
-    tg.appendChild(div);
-  });
-</script>
+<script src="script.js"></script>
 </body>
 </html>
